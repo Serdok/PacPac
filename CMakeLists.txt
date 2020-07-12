@@ -3,4 +3,8 @@ project(PacPac)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(PacPac main.cpp)
+# Setup the main game library
+add_subdirectory(PacPac)
+
+# Setup the game with graphics
+add_subdirectory(Graphics)
