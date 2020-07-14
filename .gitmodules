@@ -1,3 +1,9 @@
 [submodule "vendor/entt"]
 	path = vendor/entt
 	url = https://github.com/skypjack/entt
+[submodule "vendor/glm"]
+	path = vendor/glm
+	url = https://github.com/g-truc/glm
+[submodule "vendor/json"]
+	path = vendor/json
+	url = https://github.com/nlohmann/json
