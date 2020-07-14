@@ -1,0 +1,12 @@
+Tile numbers signification:
+-1 Air
+0 through 17 Wall
+18 Door
+
+Wall types
+0           Square
+1 - 4       U shaped tile (1 has 0 rotation, increments of 90 degrees for each number)
+5 - 6       = shaped tile (5 has 0 rotation, 6 has 90 rotation)
+7 - 10      L shaped tile (7 has 0 rotation, increments of 90 degrees for each number)
+11 - 14     _ shaped tile (12 has 0 rotation, increments of 90 degrees for each number)
+15          Square with no borders

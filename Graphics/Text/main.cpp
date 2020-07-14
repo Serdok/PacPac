@@ -3,46 +3,29 @@
 // The aim of this executable is to have a "playground" to test basic functionalities before going 2D (or more ? :p)
 //
 
-#include <PacPac/Cell.h>
-#include <vector>
+#include <PacPac/Level.h>
 #include <iostream>
 #include <stdexcept>
 
+#include <vector>
 
 int main( [[maybe_unused]] int argc, [[maybe_unused]] char* argv[] ) {
     try {
-        const unsigned int width = 3;
-        const unsigned int height = 3;
-        const unsigned char level[] = {
-                '#', '#', '#',
-                '#', '.', '#',
-                '#', '#', '#',
-        };
+        std::filesystem::path assets_path = std::filesystem::path( argv[0] ).parent_path();
+        assets_path /= "..";
+        assets_path /= "..";
+        assets_path /= "..";
+        assets_path /= "assets";
+        std::cout << std::filesystem::canonical( assets_path ) << '\n';
 
-        // Read the level
-        std::vector< Cell > cells{};
-        for (const auto& cell : level) {
-            switch (cell) {
-                case Cell::Type::WALL:
-                case Cell::Type::AIR:
-                case Cell::Type::COIN:
-                case Cell::Type::PACPAC:
-                case Cell::Type::SLIME:
-                case Cell::Type::APPLE:
-                    cells.emplace_back();
-                    cells.back().setType( static_cast<Cell::Type>(cell) );
-                    cells.back().setPosition( Vector2< int >::One() );
-                    break;
-                default:
-                    std::string err = "Unrecognized cell ";
-                    err.push_back( cell );
-                    err.push_back( '\n' );
-                    throw std::runtime_error( err );
-            }
-        }
+        entt::registry r;
+
+        Level l( assets_path / "levels/level0.json", r );
 
         return 0;
+    } catch (std::ios_base::failure& e) {
+        std::cerr << "Code " << e.code() << " - " << e.what() << '\n';
     } catch (std::runtime_error& e) {
-        std::cerr << e.what();
+        std::cerr << e.what() << '\n';
     }
 }
