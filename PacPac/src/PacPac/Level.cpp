@@ -6,6 +6,7 @@
 #include "Components/Position.h"
 #include "Components/Solid.h"
 #include "Components/Direction.h"
+#include "Components/TimedEffect.h"
 
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
@@ -13,9 +14,20 @@ using json = nlohmann::json;
 #include <fstream>
 #include <iostream>
 
+
+Level::Level( entt::registry& registry )
+: m_registry( registry )
+{
+
+}
+
 Level::Level( const std::filesystem::path& level_filename, entt::registry& registry )
 : m_registry( registry )
 {
+    load( level_filename );
+}
+
+void Level::load( const std::filesystem::path& level_filename ) {
     if (level_filename.extension() != ".json") {
         std::string err = "Level::Level(): level_filename (which is '";
         err += level_filename;
@@ -69,6 +81,7 @@ Level::Level( const std::filesystem::path& level_filename, entt::registry& regis
         auto entity = m_registry.create();
         m_registry.emplace< Position >( entity, glm::ivec2( pacpac["x"].get< int >(), pacpac["y"].get< int >() ) );
         m_registry.emplace< Direction >( entity );
+        m_registry.emplace< TimedEffect >( entity, 1s );
     }
 
     {
@@ -77,6 +90,7 @@ Level::Level( const std::filesystem::path& level_filename, entt::registry& regis
             auto entity = m_registry.create();
             m_registry.emplace< Position >( entity, glm::ivec2( slime["x"].get< int >(), slime["y"].get< int >() ) );
             m_registry.emplace< Direction >( entity );
+            m_registry.emplace< TimedEffect >( entity, 1s );
         }
     }
 }

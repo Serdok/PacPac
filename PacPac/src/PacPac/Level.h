@@ -26,11 +26,23 @@ public:
 
 public:
     /**
-     * Load a level from a file
+     * Create an empty level
+     * @param registry A reference to an EnTT registry
+     */
+    explicit Level( entt::registry& registry );
+
+    /**
+     * Create a level from a file
      * @param level_filename The path to a .json file containing the level data
      * @param registry A reference to an EnTT registry
      */
     explicit Level( const std::filesystem::path& level_filename, entt::registry& registry );
+
+    /**
+     * Load a level from a file
+     * @param level_filename The path to a .json file containing the level data
+     */
+    void load( const std::filesystem::path& level_filename );
 
     /**
      * Get the tile from a position
