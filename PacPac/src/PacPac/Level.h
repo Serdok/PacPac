@@ -14,7 +14,7 @@
 class Level
 {
 public:
-    enum Tile {
+    enum Tile : int {
         AIR = -1,           // Able to pass through without any problems
         WALL,               // Solid tile
         DOOR = 16,          // Solid tile where we can pass through for a set amount of time
@@ -45,6 +45,21 @@ public:
      * @return A reference to the tile at the provided position
      */
     Tile& get( const glm::ivec2& position );
+
+    /**
+     * Check if the targeted tile is a wall
+     * @param position The current position of an entity
+     * @param direction The direction the entity is facing (the next tile it will go)
+     * @return true if the tile at position + direction is a wall or out of bounds, false otherwise
+     */
+    bool isWall( const glm::ivec2& position, const glm::ivec2& direction ) const;
+
+    /**
+     * Get the available directions around an entity
+     * @param position The current position of the entity
+     * @return An array containing the available directions to go to from the position
+     */
+    std::vector< glm::ivec2 > getNeighbouringTiles( const glm::ivec2& position ) const;
 
 private:
     entt::registry& m_registry;
